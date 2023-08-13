@@ -4,5 +4,4 @@ provider "aws" {
 
 resource "aws_security_group" "instance_sg" {
   name        = "instance-sg"
-  description = "Allow TLS inbound traffic"
 }
