@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_instance" "myFirstInstance" {
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
+resource "aws_security_group" "instance_sg" {
+  name        = "instance-sg"
+  description = "Allow TLS inbound traffic"
 }
