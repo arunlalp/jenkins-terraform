@@ -1,30 +1,41 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-    
-        stage ("terraform init") {
-            steps {
-                sh ("terraform init -reconfigure") 
-            }
-        }
-        
-        stage ("plan") {
-            steps {
-                sh ('terraform plan') 
-            }
-        }
+    parameters {
+        string(name: 'action', defaultValue: 'apply', description: 'Terraform Action (apply, destroy, etc.)')
+    }
 
-        stage (" Action") {
+    stages {
+        stage('checkout') {
             steps {
-                echo "Terraform action is --> ${action}"
-                sh ('terraform ${action} --auto-approve') 
-           }
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/arunlalp/jenkins-terraform']])
+            }
+        }
+        stage('checkov') {
+            steps {
+                script {
+                    def checkovResult = sh(script: 'checkov -d . --external-checks-dir custom_checks --check CUSTOM_AWS_*', returnStatus: true)
+                    if (checkovResult != 0) {
+                        error('Checkov analysis failed. Aborting pipeline.')
+                    }
+                }
+            }
+        }
+        stage('init'){
+            steps{
+                sh 'terraform init -reconfigure'
+            }
+        }
+        stage('plan'){
+            steps{
+                sh 'terraform plan'
+            }
+        }
+        stage('action') {
+            steps {
+                echo "Terraform action is --> ${params.action}"
+                sh "terraform ${params.action} --auto-approve"
+            }
         }
     }
 }
