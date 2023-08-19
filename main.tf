@@ -4,6 +4,7 @@ provider "aws" {
 
 resource "aws_security_group" "instance_sg" {
   name        = "instance-sg"
+  description = "checkov test"
 
   ingress {
     from_port        = var.from_port
