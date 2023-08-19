@@ -14,7 +14,7 @@ variable "ami_id" {
 }
 
 variable "from_port" {
-  type        = numbner
+  type        = number
   default     = 22
   description = "List of starting ports for cidr ingress rules of the EC2 security group."
 }
