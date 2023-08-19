@@ -26,8 +26,8 @@ variable "to_port" {
 }
 
 variable "protocol" {
-  type        = list(string)  # Corrected data type to list of strings
-  default     = ["tcp"]
+  type        = string
+  default     = "tcp"
   description = "List of protocols for cidr ingress rules of the EC2 security group."
 }
 
