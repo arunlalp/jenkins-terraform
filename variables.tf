@@ -14,14 +14,14 @@ variable "ami_id" {
 }
 
 variable "from_port" {
-  type        = list(number)
-  default     = [22]
+  type        = numbner
+  default     = 22
   description = "List of starting ports for cidr ingress rules of the EC2 security group."
 }
 
 variable "to_port" {
-  type        = list(number)
-  default     = [22]
+  type        = number
+  default     = 22
   description = "List of ending ports for cidr ingress rules of the EC2 security group."
 }
 
