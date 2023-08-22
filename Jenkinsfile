@@ -1,3 +1,5 @@
+@Library('jenkins_shared_library') _
+
 pipeline {
     agent any
 
@@ -8,7 +10,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/arunlalp/jenkins-terraform']])
+                checkoutGitRepo(repoUrl: 'https://github.com/arunlalp/jenkins-terraform.git', branch: 'main')
             }
         }
         stage('checkov') {
