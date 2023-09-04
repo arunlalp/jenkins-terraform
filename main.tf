@@ -7,9 +7,9 @@ resource "aws_security_group" "instance_sg" {
   #description = "checkov test"
 
   ingress {
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port        = var.form_port
+    to_port          = var.to_port
+    protocol         = var.protocol
+    cidr_blocks      = var.cidr_blocks
   }
 }
