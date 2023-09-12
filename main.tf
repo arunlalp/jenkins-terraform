@@ -12,4 +12,7 @@ resource "aws_security_group" "instance_sg" {
     protocol         = var.protocol
     cidr_blocks      = var.cidr_block
   }
+  tags = {
+    Name = "checkov_tag_test"
+  }
 }
